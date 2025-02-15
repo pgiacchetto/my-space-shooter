@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @export var move_speed = 4000
 
@@ -17,3 +18,6 @@ func _physics_process(delta: float) -> void:
 	
 	velocity = Vector2(directionX * move_speed * delta, directionY * move_speed * delta)
 	move_and_slide()
+
+func die():
+	queue_free()
