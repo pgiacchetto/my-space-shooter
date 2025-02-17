@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://dd83yjpng5on4"]
+
+[ext_resource type="PackedScene" uid="uid://btd2v25nndr8n" path="res://scenes/player.tscn" id="1_1fh5t"]
+[ext_resource type="Script" path="res://scripts/player_conveyor.gd" id="1_5rnw0"]
+[ext_resource type="PackedScene" uid="uid://c7srit410sx4a" path="res://scenes/the_vacuum.tscn" id="3_iwv6n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_baleq"]
+size = Vector2(16, 180)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cbnn7"]
+size = Vector2(352, 16)
+
+[node name="PlayerConveyor" type="Node2D"]
+script = ExtResource("1_5rnw0")
+
+[node name="PlayerBorder" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBorder"]
+position = Vector2(-8, 90)
+shape = SubResource("RectangleShape2D_baleq")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="PlayerBorder"]
+position = Vector2(328, 90)
+shape = SubResource("RectangleShape2D_baleq")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="PlayerBorder"]
+position = Vector2(160, -8)
+shape = SubResource("RectangleShape2D_cbnn7")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="PlayerBorder"]
+position = Vector2(160, 188)
+shape = SubResource("RectangleShape2D_cbnn7")
+
+[node name="Player" parent="." instance=ExtResource("1_1fh5t")]
+position = Vector2(160, 160)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(160, 90)
+
+[node name="TheVacuum" parent="." instance=ExtResource("3_iwv6n")]
