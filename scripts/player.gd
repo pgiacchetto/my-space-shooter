@@ -3,6 +3,12 @@ class_name Player
 
 @export var move_speed = 6000
 
+@onready var bullet_scene = preload("res://scenes/bullet.tscn")
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("shoot"):
+		shoot()
+
 func _physics_process(delta: float) -> void:
 	#Movement
 	d_pad_movement(delta)
@@ -25,6 +31,11 @@ func d_pad_movement(delta: float):
 	velocity = velocity.normalized()
 	velocity = velocity * move_speed * delta
 	move_and_slide()
+
+func shoot():
+	var bullet_instance = bullet_scene.instantiate()
+	bullet_instance.global_position = global_position
+	$BulletShooter.add_child(bullet_instance)
 
 func die():
 	queue_free()
