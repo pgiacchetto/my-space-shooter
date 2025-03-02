@@ -1,9 +1,13 @@
 extends CharacterBody2D
 class_name Player
 
+# Please note: The DashEffectParticle Initial Velocity needs to be set to the conveyor_speed of the player_conveyor, in order for the particle to look right.
+
 @export var move_speed = 6000
+@export var dash_speed = 18000
 
 @onready var bullet_scene = preload("res://scenes/bullet.tscn")
+var dashing: bool = false
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("shoot"):
@@ -11,7 +15,16 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	#Movement
-	d_pad_movement(delta)
+	if dashing == false && Input.is_action_just_pressed("dash"):
+		dashing = true
+		$DashEffectParticle.emitting = true
+		$DashTimer.start()
+	
+	if dashing:
+		dash(delta)
+	else:
+		d_pad_movement(delta)
+	
 
 #D-Pad style movement. In prep for an alternate movement with analog stick?
 func d_pad_movement(delta: float):
@@ -39,3 +52,14 @@ func shoot():
 
 func die():
 	queue_free()
+
+func dash(delta: float):
+	# use previous velocity but at a higher move speed
+	velocity = velocity.normalized()
+	velocity = velocity * dash_speed * delta
+	move_and_slide()
+
+func _on_dash_timer_timeout() -> void:
+	# Player has finished his dash
+	dashing = false
+	$DashEffectParticle.emitting = false
