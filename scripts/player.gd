@@ -15,7 +15,7 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	#Movement
-	if dashing == false && Input.is_action_just_pressed("dash"):
+	if dashing == false && velocity != Vector2.ZERO && Input.is_action_just_pressed("dash"):
 		dashing = true
 		$DashEffectParticle.emitting = true
 		$DashTimer.start()
@@ -47,7 +47,8 @@ func d_pad_movement(delta: float):
 
 func shoot():
 	var bullet_instance = bullet_scene.instantiate()
-	bullet_instance.global_position = global_position
+	bullet_instance.global_position.x = global_position.x
+	bullet_instance.global_position.y = global_position.y - 6	#Slight offset to make the bullet appear it is coming out of the tip of the gun
 	$BulletShooter.add_child(bullet_instance)
 
 func die():
