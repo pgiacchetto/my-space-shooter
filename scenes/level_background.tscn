@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://3w48k6dfhqm6"]
+
+[ext_resource type="Texture2D" uid="uid://dlfvhlpehnbne" path="res://assets/stars.png" id="1_qdkn1"]
+
+[node name="LevelBackground" type="ParallaxBackground"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(2, 2)
+motion_mirroring = Vector2(320, 180)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+texture_repeat = 2
+texture = ExtResource("1_qdkn1")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 320, 180)
