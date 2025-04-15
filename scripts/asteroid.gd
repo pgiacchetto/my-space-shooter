@@ -1,6 +1,7 @@
 extends Area2D
 
 @export var hit_points: int = 3
+@onready var asteroidPieceScene = preload("res://scenes/asteroid_piece.tscn")
 
 func _on_body_entered(body: Node) -> void:
 	if body is Player:
@@ -16,5 +17,14 @@ func take_damage(damage_points: int):
 		explode()
 		
 func explode():
-	# For now, just delete. But I am thinking in the future, we play some explosion that throws bits in three random directions
+	# spawn 3 asteroid pieces
+	var asteroidPiece1 = asteroidPieceScene.instantiate()
+	var asteroidPiece2 = asteroidPieceScene.instantiate()
+	var asteroidPiece3 = asteroidPieceScene.instantiate()
+	asteroidPiece1.global_position = global_position
+	asteroidPiece2.global_position = global_position
+	asteroidPiece3.global_position = global_position
+	add_sibling(asteroidPiece1)
+	add_sibling(asteroidPiece2)
+	add_sibling(asteroidPiece3)
 	queue_free()
