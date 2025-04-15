@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bj2auto8tywgi"]
+[gd_scene load_steps=9 format=3 uid="uid://bj2auto8tywgi"]
 
 [ext_resource type="Script" path="res://scripts/asteroid.gd" id="1_ek14d"]
 [ext_resource type="Texture2D" uid="uid://div41q4mahtgq" path="res://assets/asteroid.png" id="1_il6o0"]
+[ext_resource type="PackedScene" uid="uid://cgi2rjx5i8bb0" path="res://scenes/take_damage_animation.tscn" id="3_1gjil"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wact2"]
 radius = 10.5895
@@ -73,43 +74,6 @@ _data = {
 "take_damage": SubResource("Animation_dla8d")
 }
 
-[sub_resource type="Animation" id="Animation_rikns"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_kio78"]
-resource_name = "take_damage"
-length = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_wsctm"]
-_data = {
-"RESET": SubResource("Animation_rikns"),
-"take_damage": SubResource("Animation_kio78")
-}
-
 [node name="Asteroid" type="Area2D" groups=["Shootable"]]
 collision_layer = 4
 collision_mask = 17
@@ -128,9 +92,6 @@ libraries = {
 }
 autoplay = "rotation"
 
-[node name="TakeDamageAnimation" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_wsctm")
-}
+[node name="TakeDamageAnimation" parent="." instance=ExtResource("3_1gjil")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

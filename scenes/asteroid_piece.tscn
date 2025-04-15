@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=3 uid="uid://cdaiqheko32g1"]
+
+[ext_resource type="Script" path="res://scripts/asteroid_piece.gd" id="1_4ics3"]
+[ext_resource type="Texture2D" uid="uid://c4cimcwl4kov7" path="res://assets/asteroid_piece.png" id="1_wht5q"]
+[ext_resource type="PackedScene" uid="uid://cgi2rjx5i8bb0" path="res://scenes/take_damage_animation.tscn" id="3_is0ej"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y3l53"]
+radius = 6.08276
+
+[sub_resource type="Animation" id="Animation_x0ykc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_5rnh1"]
+resource_name = "rotation_1"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.5708, 3.14159, 4.71239, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_ka0b3"]
+resource_name = "rotation_2"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.5708, 0.0, -1.5708, -3.14159, -4.71239]
+}
+
+[sub_resource type="Animation" id="Animation_pieqy"]
+resource_name = "rotation_3"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [3.14159, 4.71239, 6.28319, 7.85398, 9.42478]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gy11c"]
+_data = {
+"RESET": SubResource("Animation_x0ykc"),
+"rotation_1": SubResource("Animation_5rnh1"),
+"rotation_2": SubResource("Animation_ka0b3"),
+"rotation_3": SubResource("Animation_pieqy")
+}
+
+[node name="AsteroidPiece" type="Area2D" groups=["Shootable"]]
+collision_layer = 4
+collision_mask = 17
+script = ExtResource("1_4ics3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wht5q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_y3l53")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gy11c")
+}
+
+[node name="TakeDamageAnimation" parent="." instance=ExtResource("3_is0ej")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

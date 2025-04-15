@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://vbf53w7mgrwr"]
+
+[ext_resource type="Texture2D" uid="uid://lhhqef47m8pd" path="res://assets/charge_particle.png" id="1_h6uv4"]
+
+[sub_resource type="Curve" id="Curve_fhgb6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.248718, 0.507382), -2.34386, -2.34386, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_jy02y"]
+curve = SubResource("Curve_fhgb6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vskmb"]
+particle_flag_disable_z = true
+spread = 0.0
+initial_velocity_min = 40.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_jy02y")
+
+[node name="ChargeParticle" type="GPUParticles2D"]
+amount = 2
+process_material = SubResource("ParticleProcessMaterial_vskmb")
+texture = ExtResource("1_h6uv4")
+lifetime = 0.5
+local_coords = true
