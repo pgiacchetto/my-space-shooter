@@ -38,6 +38,9 @@ shape = SubResource("RectangleShape2D_o2c0h")
 
 [node name="BulletShooter" type="Node" parent="."]
 
+[node name="ChargeTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.25
 one_shot = true
@@ -52,6 +55,8 @@ texture = ExtResource("1_edd51")
 lifetime = 0.25
 
 [node name="ChargeParticles" parent="." instance=ExtResource("3_d8yhw")]
+visible = true
 position = Vector2(0.5, 0.5)
 
+[connection signal="timeout" from="ChargeTimer" to="." method="_on_charge_timer_timeout"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]

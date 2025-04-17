@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://xrtig003qbih"]
+[gd_scene load_steps=3 format=3 uid="uid://xrtig003qbih"]
 
 [ext_resource type="PackedScene" uid="uid://vbf53w7mgrwr" path="res://scenes/charge_particle.tscn" id="1_3u2m6"]
+[ext_resource type="Script" path="res://scripts/charge_particles.gd" id="1_m1xe7"]
 
 [node name="ChargeParticles" type="Node2D"]
+visible = false
+script = ExtResource("1_m1xe7")
 
 [node name="ChargeParticle" parent="." instance=ExtResource("1_3u2m6")]
 position = Vector2(-18, 0)
@@ -25,12 +28,12 @@ rotation = 3.14159
 
 [node name="ChargeParticle6" parent="." instance=ExtResource("1_3u2m6")]
 position = Vector2(12, 12)
-rotation = 3.92699
+rotation = -2.3562
 
 [node name="ChargeParticle7" parent="." instance=ExtResource("1_3u2m6")]
 position = Vector2(0, 18)
-rotation = 4.71239
+rotation = -1.5708
 
 [node name="ChargeParticle8" parent="." instance=ExtResource("1_3u2m6")]
 position = Vector2(-12, 12)
-rotation = 5.49779
+rotation = -0.785395
