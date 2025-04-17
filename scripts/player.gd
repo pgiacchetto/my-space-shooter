@@ -7,11 +7,23 @@ class_name Player
 @export var dash_speed = 18000
 
 @onready var bullet_scene = preload("res://scenes/bullet.tscn")
+@onready var charge_bullet_scene = preload("res://scenes/charge_bullet.tscn")
 var dashing: bool = false
+var charged: bool = false
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("shoot"):
-		shoot()
+		shoot(bullet_scene)
+		# Start the charge timer. If the player holds the shoot button over time, eventually they will be charged as indicated by this timeout
+		$ChargeTimer.start()
+	elif Input.is_action_just_released("shoot"):
+		if charged:
+			shoot(charge_bullet_scene)
+			charged = false
+			$ChargeParticles.setEmitting(false)
+		else:
+			# cancel charging
+			$ChargeTimer.stop()
 
 func _physics_process(delta: float) -> void:
 	#Movement
@@ -45,8 +57,8 @@ func d_pad_movement(delta: float):
 	velocity = velocity * move_speed * delta
 	move_and_slide()
 
-func shoot():
-	var bullet_instance = bullet_scene.instantiate()
+func shoot(bullet_type):
+	var bullet_instance = bullet_type.instantiate()
 	bullet_instance.global_position.x = global_position.x
 	bullet_instance.global_position.y = global_position.y - 6	#Slight offset to make the bullet appear it is coming out of the tip of the gun
 	$BulletShooter.add_child(bullet_instance)
@@ -64,3 +76,8 @@ func _on_dash_timer_timeout() -> void:
 	# Player has finished his dash
 	dashing = false
 	$DashEffectParticle.emitting = false
+
+
+func _on_charge_timer_timeout() -> void:
+	charged = true
+	$ChargeParticles.setEmitting(true)

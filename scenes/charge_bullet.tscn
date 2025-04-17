@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cchvejm1r4ohp"]
+
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_lbyma"]
+[ext_resource type="Texture2D" uid="uid://d1bqxiws0e2v" path="res://assets/charge_bullet.png" id="2_7w71l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2pohw"]
+radius = 4.52769
+
+[node name="ChargeBullet" type="Area2D"]
+collision_layer = 32
+collision_mask = 12
+script = ExtResource("1_lbyma")
+move_speed = 360
+damage_points = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_2pohw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.5, 0.5)
+texture = ExtResource("2_7w71l")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0.5, 0.5)
+scale = Vector2(0.45, 0.45)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
