@@ -19,7 +19,7 @@ initial_velocity_max = 20.0
 gravity = Vector3(0, 0, 0)
 attractor_interaction_enabled = false
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 14
 motion_mode = 1
 script = ExtResource("1_2dwve")

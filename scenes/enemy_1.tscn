@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmii1r5nxmo00"]
+
+[ext_resource type="Script" path="res://scripts/enemy_1.gd" id="1_2g8d5"]
+[ext_resource type="Texture2D" uid="uid://d34sp7eeix4ti" path="res://assets/enemy_1.png" id="1_yswkq"]
+[ext_resource type="PackedScene" uid="uid://cgi2rjx5i8bb0" path="res://scenes/take_damage_animation.tscn" id="3_kud1n"]
+
+[node name="Enemy1" type="Area2D" groups=["Shootable"]]
+collision_layer = 8
+collision_mask = 49
+script = ExtResource("1_2g8d5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_yswkq")
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, -28)
+
+[node name="TakeDamageAnimation" parent="." instance=ExtResource("3_kud1n")]
+
+[node name="BulletLaunchPosition" type="Marker2D" parent="."]
+position = Vector2(0, 7)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, -18, -4, -14, -4, 0, -16, 11, -16, 15, -8, 16, -8, 11, 8, 11, 8, 16, 16, 15, 16, 11, 4, 0, 4, -14)
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
