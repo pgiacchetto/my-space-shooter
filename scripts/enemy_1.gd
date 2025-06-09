@@ -31,6 +31,15 @@ func take_damage(damage_points: int):
 
 # TODO Bug: because I toggle visibility when the enemy takes damage, this signal fires whenever that happens
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
-	# Call the timeout method immediately, but also start the timer
-	_on_shoot_timer_timeout()
+	# Start the timer for shots
 	$ShootTimer.start()
+
+
+func _on_body_entered(body: Node2D) -> void:
+	# TODO Ideally this should be refactored to be a signal on the player.
+	# If it collides with any Area2D that is in the group
+	# playerCollidable (or something), it does the same action.
+	# Taking damage and removing the thing the player collided with.
+	if body is Player:
+		body.die()
+		queue_free()
