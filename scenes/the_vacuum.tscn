@@ -1,18 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7srit410sx4a"]
+[gd_scene load_steps=4 format=3 uid="uid://c7srit410sx4a"]
 
 [ext_resource type="Script" path="res://scripts/the_vacuum.gd" id="1_1qht6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3hq66"]
-size = Vector2(1628, 20)
+size = Vector2(624, 122)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ypofk"]
+size = Vector2(64, 293.5)
 
 [node name="TheVacuum" type="Area2D"]
 collision_layer = 16
-collision_mask = 12
+collision_mask = 44
 script = ExtResource("1_1qht6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(160, 240)
+position = Vector2(160, 291)
 shape = SubResource("RectangleShape2D_3hq66")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-120, 81.75)
+shape = SubResource("RectangleShape2D_ypofk")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(440, 82)
+shape = SubResource("RectangleShape2D_ypofk")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

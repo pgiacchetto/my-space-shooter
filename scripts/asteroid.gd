@@ -5,7 +5,6 @@ extends Area2D
 
 func _on_body_entered(body: Node) -> void:
 	if body is Player:
-		#TODO collide with the asteroid
 		body.die()
 		explode()
 
@@ -17,6 +16,7 @@ func take_damage(damage_points: int):
 		explode()
 		
 func explode():
+	#TODO make it so these asteroid pieces can never go in the same random direction?
 	# spawn 3 asteroid pieces
 	var asteroidPiece1 = asteroidPieceScene.instantiate()
 	var asteroidPiece2 = asteroidPieceScene.instantiate()
