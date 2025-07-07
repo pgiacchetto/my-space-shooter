@@ -11,7 +11,7 @@ class_name Player
 var dashing: bool = false
 var charged: bool = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("shoot"):
 		shoot(bullet_scene)
 		# Start the charge timer. If the player holds the shoot button over time, eventually they will be charged as indicated by this timeout
