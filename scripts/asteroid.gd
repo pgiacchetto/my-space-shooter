@@ -6,7 +6,7 @@ extends Area2D
 func _on_body_entered(body: Node) -> void:
 	if body is Player:
 		body.die()
-		explode()
+		call_deferred("explode")
 
 func take_damage(damage_points: int):
 	hit_points -= damage_points
