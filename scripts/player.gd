@@ -27,10 +27,19 @@ func _process(_delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	#Movement
-	if dashing == false && velocity != Vector2.ZERO && Input.is_action_just_pressed("dash"):
-		dashing = true
-		$DashEffectParticle.emitting = true
-		$DashTimer.start()
+	if !dashing:
+		var dashX = 0;
+		if Input.is_action_just_pressed("dash_left"):
+			dashX -= 1
+		if Input.is_action_just_pressed("dash_right"):
+			dashX += 1
+		if dashX != 0:
+			dashing = true
+			# Set the velocity to a unit vector of the direction we are dashing.
+			# Speed will be increased when we call the dash method
+			velocity = Vector2(dashX, 0)
+			$DashEffectParticle.emitting = true
+			$DashTimer.start()
 	
 	if dashing:
 		dash(delta)
