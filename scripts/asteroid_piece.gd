@@ -12,9 +12,6 @@ func _ready():
 		$AnimationPlayer.play("rotation_2")
 	elif randomAnimation == 2:
 		$AnimationPlayer.play("rotation_3")
-	
-	var randomAngle = (randi() % 8) * 45
-	velocity = Vector2.from_angle(randomAngle) * speed
 
 func _physics_process(delta: float) -> void:
 	position += velocity * delta
