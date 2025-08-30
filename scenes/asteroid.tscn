@@ -1,8 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://bj2auto8tywgi"]
+[gd_scene load_steps=13 format=3 uid="uid://bj2auto8tywgi"]
 
 [ext_resource type="Script" path="res://scripts/asteroid.gd" id="1_ek14d"]
 [ext_resource type="Texture2D" uid="uid://div41q4mahtgq" path="res://assets/asteroid.png" id="1_il6o0"]
-[ext_resource type="PackedScene" uid="uid://cgi2rjx5i8bb0" path="res://scenes/take_damage_animation.tscn" id="3_1gjil"]
+[ext_resource type="Shader" path="res://shaders/shader_test_sprite.gdshader" id="2_yepnl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l6g4m"]
+shader = ExtResource("2_yepnl")
+shader_parameter/active = false
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wact2"]
 radius = 10.5895
@@ -74,12 +78,50 @@ _data = {
 "take_damage": SubResource("Animation_dla8d")
 }
 
+[sub_resource type="Animation" id="Animation_4gsu8"]
+resource_name = "take_damage"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_h0ay5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j5srp"]
+_data = {
+"RESET": SubResource("Animation_h0ay5"),
+"take_damage": SubResource("Animation_4gsu8")
+}
+
 [node name="Asteroid" type="Area2D" groups=["Shootable"]]
 collision_layer = 4
 collision_mask = 17
 script = ExtResource("1_ek14d")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_l6g4m")
 texture = ExtResource("1_il6o0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -92,6 +134,9 @@ libraries = {
 }
 autoplay = "rotation"
 
-[node name="TakeDamageAnimation" parent="." instance=ExtResource("3_1gjil")]
+[node name="TakeDamageAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_j5srp")
+}
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
