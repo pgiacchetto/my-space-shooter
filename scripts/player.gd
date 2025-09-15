@@ -8,6 +8,11 @@ class_name Player
 
 @onready var bullet_scene = preload("res://scenes/bullet.tscn")
 @onready var charge_bullet_scene = preload("res://scenes/charge_bullet.tscn")
+@onready var bank_right = preload("res://assets/player_bank_right.png")
+
+@onready var animated_sprite = $AnimatedSprite2D
+@onready var dash_effect_particle_r = $DashEffectParticleR
+@onready var dash_effect_particle_l = $DashEffectParticleL
 var dashing: bool = false
 var charged: bool = false
 
@@ -38,7 +43,10 @@ func _physics_process(delta: float) -> void:
 			# Set the velocity to a unit vector of the direction we are dashing.
 			# Speed will be increased when we call the dash method
 			velocity = Vector2(dashX, 0)
-			$DashEffectParticle.emitting = true
+			animated_sprite.flip_h = dashX < 0	# If this condition is true, we are banking left so we want to flip the sprite
+			animated_sprite.play("bank_right")
+			dash_effect_particle_r.emitting = dashX > 0
+			dash_effect_particle_l.emitting = dashX < 0
 			$DashTimer.start()
 	
 	if dashing:
@@ -84,7 +92,10 @@ func dash(delta: float):
 func _on_dash_timer_timeout() -> void:
 	# Player has finished his dash
 	dashing = false
-	$DashEffectParticle.emitting = false
+	dash_effect_particle_r.emitting = false
+	dash_effect_particle_l.emitting = false
+	animated_sprite.play("default")
+	animated_sprite.flip_h = false
 
 
 func _on_charge_timer_timeout() -> void:
