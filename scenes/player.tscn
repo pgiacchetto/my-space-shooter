@@ -1,23 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://btd2v25nndr8n"]
+[gd_scene load_steps=8 format=3 uid="uid://btd2v25nndr8n"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_2dwve"]
-[ext_resource type="Texture2D" uid="uid://do6n5f5d1erd6" path="res://assets/player_sprite_sheet.png" id="2_rpmxc"]
 [ext_resource type="Texture2D" uid="uid://ds5wcaus4cgnt" path="res://assets/player_bank_right.png" id="3_5n3ry"]
+[ext_resource type="Texture2D" uid="uid://da2pcj7gka8ql" path="res://assets/player.png" id="3_b3kl5"]
 [ext_resource type="PackedScene" uid="uid://xrtig003qbih" path="res://scenes/charge_particles.tscn" id="3_d8yhw"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w8tfw"]
-atlas = ExtResource("2_rpmxc")
-region = Rect2(19, 0, 19, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ji8a4"]
-atlas = ExtResource("2_rpmxc")
-region = Rect2(0, 0, 19, 20)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qdquj"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w8tfw")
+"texture": ExtResource("3_5n3ry")
 }],
 "loop": true,
 "name": &"bank_right",
@@ -25,7 +17,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ji8a4")
+"texture": ExtResource("3_b3kl5")
 }],
 "loop": true,
 "name": &"default",
